@@ -1,0 +1,12 @@
+https://habr.com/ru/post/334778/
+https://nag.wiki/pages/viewpage.action?pageId=1214130
+https://www.qtech.ru/en/support/wiki/468/2189/
+http://netwild.ru/aggregation/
+https://python.hotexamples.com/ru/examples/scapy.all/-/sendp/python-sendp-function-examples.html
+https://question-it.com/questions/2683870/generatsija-trafika-lacp-s-pomoschju-scapy
+https://habr.com/ru/post/180761/
+https://www.youtube.com/watch?v=ple5_uLtljk
+https://github.com/ibis-inria/pyLoadBalancer
+https://habr.com/ru/company/selectel/blog/250201/
+https://sharkfesteurope.wireshark.org/assets/presentations16eu/18.pdf
+https://python.hotexamples.com/examples/ryu.lib.packet.slow/-/lacp/python-lacp-function-examples.html
