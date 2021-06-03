@@ -9,4 +9,6 @@ https://www.youtube.com/watch?v=ple5_uLtljk
 https://github.com/ibis-inria/pyLoadBalancer
 https://habr.com/ru/company/selectel/blog/250201/
 https://sharkfesteurope.wireshark.org/assets/presentations16eu/18.pdf
+https://null.53bits.co.uk/index.php?page=scapy-examples
+https://docplayer.ru/43192188-Link-aggregation-lacp-lekciya-4-0.html
 https://python.hotexamples.com/examples/ryu.lib.packet.slow/-/lacp/python-lacp-function-examples.html
