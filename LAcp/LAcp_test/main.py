@@ -3,16 +3,29 @@ from scapy.contrib.lacp import SlowProtocol, LACP
 from scapy.layers.inet import Ether, Dot3
 from scapy.all import *
 
-def scan(ip):
 
-    pkt= Ether() / SlowProtocol() / LACP()
-    unansw,answ=scapy.srp(pkt,timeout=1)
-    запрашивает  в консоли
-    print(unansw.summary())# пакеты без ответа
+from scapy.all import *
+import time
 
-    print(answ.summary())# пакеты с ответом
+__version__ = "0.0.1"
 
-    scapy.ls(scapy.LACP())
+def handle_arp_packet(packet):
 
-scan("10.0.2.1/24")
+    # Match ARP requests
+    if packet[scapy.ARP].op == scapy.ARP.who_has:
+        print('New ARP Request')
+        print(packet.summary())
+        print(ls(packet))
+        print(packet[Ether].src, "has IP", packet[scapy.ARP].psrc)
 
+    # Match ARP replies
+    if packet[scapy.ARP].op == scapy.ARP.is_at:
+        print('New ARP Reply')
+        print(packet.summary())
+        #print(ls(packet))
+
+    return
+
+if __name__ == "__main__":
+    pkts = sniff(count=5, filter="arp")
+    pkts.summary()
