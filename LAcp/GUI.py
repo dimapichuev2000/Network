@@ -131,6 +131,7 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "actor_state"))
         item = self.tableWidget.horizontalHeaderItem(6)
         item.setText(_translate("MainWindow", "partner_state"))
+        self.tableWidget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         self.dst.setText(_translate("MainWindow", "dst"))
         self.src.setText(_translate("MainWindow", "src"))
         self.data.setText(_translate("MainWindow", "data"))
@@ -171,7 +172,7 @@ class Ui_MainWindow(object):
         self.tableWidget.setItem(rowPosition, 4, QtWidgets.QTableWidgetItem(data))
         self.tableWidget.setItem(rowPosition, 5, QtWidgets.QTableWidgetItem(actor_state_print))
         self.tableWidget.setItem(rowPosition, 6, QtWidgets.QTableWidgetItem(partner_state_print))
-        l.scan(dst,src, data,actor_state,partner_state)
+        l.scan(dst,src, "Get info//"+data,actor_state,partner_state)
 
 
 
@@ -182,7 +183,9 @@ class Ui_MainWindow(object):
     def on_click(self):
         dst = self.dst_edit.text()
         src = self.src_edit.text()
-        data = self.data_edit.text()
+
+
+
         match = re.fullmatch(r'([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}',dst)
         match2 = re.fullmatch(r'([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}', src)
         if (match and match2):
