@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'GUI2.ui'
+# Form implementation generated from reading ui file 'GUI2_2.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -9,8 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import pandas as pd
-from lacp_client import Sniffer
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -71,16 +70,8 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-
-
-        self.pushButton_3.clicked.connect(self.on_click)  # соединение сигнала и слота (сигнал clicked и слот on_click)
-        self.pushButton.clicked.connect(self.on_click_clear)
-        self.file_info.clicked.connect(self.on_click_file)
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
-
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -100,40 +91,13 @@ class Ui_MainWindow(object):
         self.sec_inf.setText(_translate("MainWindow", "сек"))
         self.pushButton_3.setText(_translate("MainWindow", "Искать"))
         self.file_info.setText(_translate("MainWindow", "Читать из файла "))
-    def on_click_clear(self):
-        self.tableWidget.setRowCount(0)
-
-    def on_click_file(self):
-        rowPosition = self.tableWidget.rowCount()
-        df2 = pd.read_csv('input.txt')
-        for i in range(9):
-            dst = df2.values[i][1]
-            src = df2.values[i][2]
-            subtype = df2.values[i][3]
-            type = df2.values[i][4]
-            data = df2.values[i][5]
-
-        print(dst, src, subtype, type, data)
-        self.tableWidget.setItem(rowPosition, 0, QtWidgets.QTableWidgetItem(dst))
-        self.tableWidget.setItem(rowPosition, 1, QtWidgets.QTableWidgetItem(src))
-        self.tableWidget.setItem(rowPosition, 2, QtWidgets.QTableWidgetItem(type))
-        self.tableWidget.setItem(rowPosition, 3, QtWidgets.QTableWidgetItem("LACP"))
-        self.tableWidget.setItem(rowPosition, 4, QtWidgets.QTableWidgetItem(data))
-
-    def on_click(self):
-        time_sec=self.Time_edit.text()
-        sniff_tmp=Sniffer()
-        sniff_tmp.sniffer(time_sec)
 
 
-
-def GUI(str_list,dst,src,type):
+if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
-
     MainWindow.show()
     sys.exit(app.exec_())
-

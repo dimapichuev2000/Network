@@ -4,6 +4,7 @@ import scapy.all as scapy
 from scapy.layers.inet import Ether, Dot3
 from scapy.contrib.lacp import SlowProtocol, LACP
 from scapy.layers.l2 import LLC, SNAP, STP
+import pandas as pd
 
 # Генерация пакета
 #dst- дистанейшен адрес
