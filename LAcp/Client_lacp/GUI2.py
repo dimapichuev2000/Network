@@ -11,6 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
 from lacp_client import Sniffer
+import time
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -105,8 +106,10 @@ class Ui_MainWindow(object):
 
     def on_click_file(self):
         rowPosition = self.tableWidget.rowCount()
+        self.tableWidget.insertRow(rowPosition)
         df2 = pd.read_csv('input.txt')
-        for i in range(9):
+        N=len(df2)
+        for i in range(N):
             dst = df2.values[i][1]
             src = df2.values[i][2]
             subtype = df2.values[i][3]
@@ -118,16 +121,29 @@ class Ui_MainWindow(object):
         self.tableWidget.setItem(rowPosition, 1, QtWidgets.QTableWidgetItem(src))
         self.tableWidget.setItem(rowPosition, 2, QtWidgets.QTableWidgetItem(type))
         self.tableWidget.setItem(rowPosition, 3, QtWidgets.QTableWidgetItem("LACP"))
-        self.tableWidget.setItem(rowPosition, 4, QtWidgets.QTableWidgetItem(data))
+        self.tableWidget.setItem(rowPosition, 4, QtWidgets.QTableWidgetItem(str(data)))
 
     def on_click(self):
-        time_sec=self.Time_edit.text()
+        flag=True
+        time_sec=int(self.Time_edit.text())
+        timing = time.time()
         sniff_tmp=Sniffer()
-        sniff_tmp.sniffer(time_sec)
+        sniff_tmp.sniff(time_sec)
+
+        while True and flag:
+            if time.time() - timing > time_sec:
+                timing = time.time()
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle("Внимание")
+                msg.setText("Прошло время поиска")
+                msg.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                msg.exec_()
+                flag=False
 
 
 
-def GUI(str_list,dst,src,type):
+
+def GUI():
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()

@@ -28,11 +28,10 @@ def traffic_monitor_callback(pkt):
     columns = ['dst', 'src', 'subtype', 'type', 'data']
     df1 = pd.DataFrame(columns=columns)
     df1 = df1.fillna(0)
-    for i in range(9):
-        b = {'dst': dst, 'src': src, 'subtype': "LACP", 'type': type,'data': str_list}
-        df1 = df1.append(b, ignore_index=True)
+    b = {'dst': dst, 'src': src, 'subtype': "LACP", 'type': type,'data': str_list}
+    df1 = df1.append(b, ignore_index=True)
 
-    df1.to_csv('Client_lacp/input.txt')
+    df1.to_csv('input.txt')
 
     f.close()
 
@@ -47,6 +46,7 @@ def traffic_monitor_callback(pkt):
 
 
 
+
 class Sniffer:
-     def sniffer(self,time_sec):
+     def sniff(self,time_sec):
         sniff(iface="Ethernet", stop_filter=traffic_monitor_callback, store=0, timeout=time_sec, filter="ether proto 0x8809")
