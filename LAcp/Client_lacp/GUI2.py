@@ -87,6 +87,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.pushButton.setText(_translate("MainWindow", "Отчистить"))
+        self.tableWidget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "dst"))
         item = self.tableWidget.horizontalHeaderItem(1)
@@ -105,41 +106,57 @@ class Ui_MainWindow(object):
         self.tableWidget.setRowCount(0)
 
     def on_click_file(self):
-        rowPosition = self.tableWidget.rowCount()
-        self.tableWidget.insertRow(rowPosition)
+        
         df2 = pd.read_csv('input.txt')
-        N=len(df2)
+        N = len(df2)
         for i in range(N):
+
             dst = df2.values[i][1]
             src = df2.values[i][2]
             subtype = df2.values[i][3]
             type = df2.values[i][4]
             data = df2.values[i][5]
+            if (type == 34825):
+                type = "SLOW"
+            rowPosition = self.tableWidget.rowCount()
+            self.tableWidget.insertRow(rowPosition)
+            self.tableWidget.setItem(rowPosition, 0, QtWidgets.QTableWidgetItem(dst))
+            self.tableWidget.setItem(rowPosition, 1, QtWidgets.QTableWidgetItem(src))
+            self.tableWidget.setItem(rowPosition, 2, QtWidgets.QTableWidgetItem(type))
+            self.tableWidget.setItem(rowPosition, 3, QtWidgets.QTableWidgetItem("LACP"))
+            self.tableWidget.setItem(rowPosition, 4, QtWidgets.QTableWidgetItem(str(data)))
 
         print(dst, src, subtype, type, data)
-        self.tableWidget.setItem(rowPosition, 0, QtWidgets.QTableWidgetItem(dst))
-        self.tableWidget.setItem(rowPosition, 1, QtWidgets.QTableWidgetItem(src))
-        self.tableWidget.setItem(rowPosition, 2, QtWidgets.QTableWidgetItem(type))
-        self.tableWidget.setItem(rowPosition, 3, QtWidgets.QTableWidgetItem("LACP"))
-        self.tableWidget.setItem(rowPosition, 4, QtWidgets.QTableWidgetItem(str(data)))
+
+
+
+
+
 
     def on_click(self):
         flag=True
         time_sec=int(self.Time_edit.text())
-        timing = time.time()
-        sniff_tmp=Sniffer()
-        sniff_tmp.sniff(time_sec)
+        if(time_sec>10000):
+            timing = time.time()
+            sniff_tmp = Sniffer()
+            sniff_tmp.sniff(time_sec)
 
-        while True and flag:
-            if time.time() - timing > time_sec:
-                timing = time.time()
-                msg = QtWidgets.QMessageBox()
-                msg.setWindowTitle("Внимание")
-                msg.setText("Прошло время поиска")
-                msg.setStandardButtons(QtWidgets.QMessageBox.Ok)
-                msg.exec_()
-                flag=False
-
+            while True and flag:
+                if time.time() - timing > time_sec:
+                    timing = time.time()
+                    msg = QtWidgets.QMessageBox()
+                    msg.setWindowTitle("Внимание")
+                    msg.setText("Прошло время поиска")
+                    msg.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                    msg.exec_()
+                    flag = False
+        else:
+            msg = QtWidgets.QMessageBox()
+            msg.setWindowTitle("Внимание")
+            msg.setIcon(QtWidgets.QMessageBox.Warning)
+            msg.setText("Нельзя вводить время больше 10000")
+            msg.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            msg.exec_()
 
 
 
