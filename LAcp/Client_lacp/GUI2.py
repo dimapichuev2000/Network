@@ -107,7 +107,7 @@ class Ui_MainWindow(object):
 
     def on_click_file(self):
         
-        df2 = pd.read_csv('input.txt')
+        df2 = pd.read_csv('data_lacp.txt')
         N = len(df2)
         for i in range(N):
 
@@ -136,7 +136,7 @@ class Ui_MainWindow(object):
     def on_click(self):
         flag=True
         time_sec=int(self.Time_edit.text())
-        if(time_sec>10000):
+        if(time_sec<10000):
             timing = time.time()
             sniff_tmp = Sniffer()
             sniff_tmp.sniff(time_sec)

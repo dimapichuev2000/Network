@@ -24,14 +24,14 @@ def traffic_monitor_callback(pkt):
         src = elem[0].src
         type = elem[0].type
 
-    f = open('input.txt', 'r')
+    f = open('data_lacp.txt', 'r')
     columns = ['dst', 'src', 'subtype', 'type', 'data']
     df1 = pd.DataFrame(columns=columns)
     df1 = df1.fillna(0)
     b = {'dst': dst, 'src': src, 'subtype': "LACP", 'type': type,'data': str_list}
     df1=df1.append(b, ignore_index=True)
 
-    df1.to_csv('input.txt',header=None,mode='a')
+    df1.to_csv('data_lacp.txt',header=None,mode='a')
     f.close()
 
 
